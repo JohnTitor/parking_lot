@@ -59,7 +59,7 @@ impl AtomicElisionExt for AtomicUsize {
     fn elision_acquire(&self, current: usize, new: usize) -> Result<usize, usize> {
         unsafe {
             let prev: usize;
-            asm!("xacquire; lock; cmpxchgl $2, $1"
+            llvm_asm!("xacquire; lock; cmpxchgl $2, $1"
                  : "={eax}" (prev), "+*m" (self)
                  : "r" (new), "{eax}" (current)
                  : "memory"
@@ -76,7 +76,7 @@ impl AtomicElisionExt for AtomicUsize {
     fn elision_release(&self, current: usize, new: usize) -> Result<usize, usize> {
         unsafe {
             let prev: usize;
-            asm!("xrelease; lock; cmpxchgl $2, $1"
+            llvm_asm!("xrelease; lock; cmpxchgl $2, $1"
                  : "={eax}" (prev), "+*m" (self)
                  : "r" (new), "{eax}" (current)
                  : "memory"
@@ -102,7 +102,7 @@ impl AtomicElisionExt for AtomicUsize {
     fn elision_acquire(&self, current: usize, new: usize) -> Result<usize, usize> {
         unsafe {
             let prev: usize;
-            asm!("xacquire; lock; cmpxchgl $2, $1"
+            llvm_asm!("xacquire; lock; cmpxchgl $2, $1"
                  : "={rax}" (prev), "+*m" (self)
                  : "r" (new), "{rax}" (current)
                  : "memory"
@@ -119,7 +119,7 @@ impl AtomicElisionExt for AtomicUsize {
     fn elision_release(&self, current: usize, new: usize) -> Result<usize, usize> {
         unsafe {
             let prev: usize;
-            asm!("xrelease; lock; cmpxchgl $2, $1"
+            llvm_asm!("xrelease; lock; cmpxchgl $2, $1"
                  : "={rax}" (prev), "+*m" (self)
                  : "r" (new), "{rax}" (current)
                  : "memory"
@@ -145,7 +145,7 @@ impl AtomicElisionExt for AtomicUsize {
     fn elision_acquire(&self, current: usize, new: usize) -> Result<usize, usize> {
         unsafe {
             let prev: usize;
-            asm!("xacquire; lock; cmpxchgq $2, $1"
+            llvm_asm!("xacquire; lock; cmpxchgq $2, $1"
                  : "={rax}" (prev), "+*m" (self)
                  : "r" (new), "{rax}" (current)
                  : "memory"
@@ -162,7 +162,7 @@ impl AtomicElisionExt for AtomicUsize {
     fn elision_release(&self, current: usize, new: usize) -> Result<usize, usize> {
         unsafe {
             let prev: usize;
-            asm!("xrelease; lock; cmpxchgq $2, $1"
+            llvm_asm!("xrelease; lock; cmpxchgq $2, $1"
                  : "={rax}" (prev), "+*m" (self)
                  : "r" (new), "{rax}" (current)
                  : "memory"
